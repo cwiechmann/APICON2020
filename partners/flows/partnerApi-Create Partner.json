@@ -1,7 +1,7 @@
 {
 	"schemaVersion": "4",
 	"info": {
-		"name": "Create Partner"
+		"name": "partnerApi - post /partner"
 	},
 	"parameter": {
 		"properties": {
@@ -24,41 +24,166 @@
 		},
 		"additionalProperties": false,
 		"required": [
-			"params",
 			"request",
 			"config",
-			"env"
+			"env",
+			"params"
 		]
 	},
-	"start": "http.setresponse.1",
+	"start": "mustache.1",
 	"nodes": {
-		"http.setresponse.1": {
-			"type": "nodehandler://axway-flow/http",
-			"method": "setresponse",
-			"name": "Set HTTP Response",
+		"mustache.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-mustache/mustache",
+			"name": "Create request payload",
+			"method": "format",
 			"parameters": [
 				{
-					"name": "status",
-					"value": "201",
-					"type": "number",
-					"metaName": "Status",
-					"metaDescription": "The HTTP status code"
+					"name": "template",
+					"type": "string",
+					"value": "\"{\\n  \\\"firstname\\\": \\\"{{data.firstName}}\\\",\\n  \\\"lastname\\\": \\\"{{data.lastName}}\\\",\\n  \\\"email\\\": \\\"{{data.email}}\\\",\\n  \\\"rating\\\": 0,\\n  \\\"street\\\": \\\"{{data.street}}\\\",\\n  \\\"zip\\\": \\\"{{data.zip}}\\\",\\n  \\\"city\\\": \\\"{{data.city}}\\\",\\n  \\\"country\\\": \\\"{{data.country}}\\\"\\n}\"",
+					"metaName": "Template",
+					"metaDescription": "The Mustache template. e.g. `Hi {{data.user}}`."
 				},
 				{
-					"name": "headers",
-					"value": "{}",
-					"type": "object",
-					"metaName": "Headers",
-					"metaDescription": "Key-value pairs of headers"
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$.params.body",
+					"metaName": "Data",
+					"metaDescription": "The value to assign to the \"data\" variable in the template."
 				}
 			],
 			"outputs": {
 				"next": {
-					"context": "$.response",
+					"context": "$.requestPayload",
+					"routes": [
+						"json.1"
+					],
 					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
 				}
 			},
-			"metaMethod": "Set HTTP Response"
+			"metaMethod": "Format string"
+		},
+		"json.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-json/json",
+			"name": "Create JSON",
+			"method": "parse",
+			"parameters": [
+				{
+					"name": "json",
+					"type": "jsonpath",
+					"value": "$.requestPayload",
+					"metaName": "JSON",
+					"metaDescription": "The JSON string to parse."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"crm-v7.1"
+					],
+					"context": "$.requestPayloadJSON",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Parse"
+		},
+		"crm-v7.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-swagger/crm-v7",
+			"name": "Create partner",
+			"method": "Create mysql/partner",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$.requestPayloadJSON",
+					"metaName": "data",
+					"metaDescription": "Create body"
+				}
+			],
+			"outputs": {
+				"201": {
+					"routes": [
+						"mustache.2"
+					],
+					"context": "$.response",
+					"metaName": "201"
+				},
+				"400": {
+					"routes": [],
+					"context": "$.response",
+					"metaName": "400"
+				},
+				"401": {
+					"routes": [],
+					"context": "$.response",
+					"metaName": "401"
+				},
+				"404": {
+					"routes": [],
+					"context": "$.response",
+					"metaName": "404"
+				},
+				"500": {
+					"routes": [],
+					"context": "$.response",
+					"metaName": "500"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				},
+				"default": {
+					"routes": [],
+					"context": "$.response",
+					"metaName": "Default"
+				}
+			},
+			"metaMethod": "Create mysql/partner"
+		},
+		"mustache.2": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-mustache/mustache",
+			"name": "Create response message",
+			"method": "format",
+			"parameters": [
+				{
+					"name": "template",
+					"type": "string",
+					"value": "\"{\\\"message\\\":\\\"Partner created with ID: {{data.location}}\\\"}\"",
+					"metaName": "Template",
+					"metaDescription": "The Mustache template. e.g. `Hi {{data.user}}`."
+				},
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$.response.headers",
+					"metaName": "Data",
+					"metaDescription": "The value to assign to the \"data\" variable in the template."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.value",
+					"routes": [],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Format string"
 		}
 	}
 }

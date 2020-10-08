@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Partner API",
+    "title": "Masterdata API",
     "version": "1.0",
-    "description": "Use this API to perform partner onboarding"
+    "description": "This update is managing all kind of masterdata information"
   },
   "host": "localhost:3000",
   "schemes": [
@@ -17,35 +17,6 @@
   ],
   "paths": {
     "/partner/{partnerId}": {
-      "post": {
-        "summary": "",
-        "operationId": "Create Partner",
-        "responses": {
-          "201": {
-            "description": "Partner created",
-            "headers": {}
-          }
-        },
-        "description": "This endpoint creates a new partner in our sub-systems",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            },
-            "description": "The partner data as a JSON request body",
-            "x-examples": {
-              "Example partner": {}
-            }
-          }
-        ],
-        "tags": [
-          "partner"
-        ],
-        "x-flow": "partnerApi-Create Partner"
-      },
       "get": {
         "summary": "",
         "operationId": "Get Partner",
@@ -77,9 +48,45 @@
           "description": "The ID of the partner"
         }
       ]
+    },
+    "/partner": {
+      "post": {
+        "summary": "",
+        "operationId": "Create Partner",
+        "responses": {
+          "201": {
+            "description": "Partner Created",
+            "examples": {
+              "example-1": {
+                "message": "Partner 3 created"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            },
+            "description": "Partner to be created",
+            "x-examples": {
+              "MaxMustermann": {
+                "firstName": "Max",
+                "lastName": "Mustermann",
+                "email": "max@mustermanns.de"
+              }
+            }
+          }
+        ],
+        "description": "",
+        "x-flow": "partnerApi-Create Partner"
+      }
     }
   },
   "definitions": {},
   "securityDefinitions": {},
-  "basePath": "/api/v1"
+  "basePath": "/masterdata/v1"
 }

@@ -1,0 +1,705 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "An API Builder service",
+		"version": "1.0.0",
+		"title": "CRM",
+		"x-summary": "CRM API for APICon Demo"
+	},
+	"paths": {
+		"/endpoints/partner/upsert": {
+			"post": {
+				"tags": [
+					"mysql/partner"
+				],
+				"description": "Create or update a mysql/partner",
+				"operationId": "Upsert mysql/partner",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "data",
+						"description": "Upsert body",
+						"required": false,
+						"schema": {
+							"$ref": "#/definitions/mysql~1partner-full"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "The upsert succeeded, and resulted in an insert.",
+						"headers": {
+							"Location": {
+								"type": "string",
+								"description": "The URL to the newly created instance."
+							}
+						}
+					},
+					"204": {
+						"description": "The upsert succeeded, and resulted in an update."
+					},
+					"400": {
+						"description": "Bad request."
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server."
+					},
+					"404": {
+						"description": "No results were found."
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server."
+					}
+				}
+			}
+		},
+		"/endpoints/partner/distinct/{field}": {
+			"get": {
+				"tags": [
+					"mysql/partner"
+				],
+				"description": "Find distinct mysql/partner",
+				"operationId": "Distinct mysql/partner",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "field",
+						"in": "path",
+						"description": "The field name that must be distinct.",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"description": "The number of records to fetch. The value must be greater than 0, and no greater than 1000.",
+						"required": false,
+						"type": "number",
+						"maximum": 1000,
+						"minimum": 0
+					},
+					{
+						"name": "skip",
+						"in": "query",
+						"description": "The number of records to skip. The value must not be less than 0.",
+						"required": false,
+						"type": "number",
+						"minimum": 0
+					},
+					{
+						"name": "where",
+						"in": "query",
+						"description": "Constrains values for fields. The value should be encoded JSON.",
+						"required": false,
+						"type": "string",
+						"format": "json"
+					},
+					{
+						"name": "order",
+						"in": "query",
+						"description": "A dictionary of one or more fields specifying sorting of results. In general, you can sort based on any predefined field that you can query using the where operator, as well as on custom fields. The value should be encoded JSON.",
+						"required": false,
+						"type": "string",
+						"format": "json"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Distinct fields response",
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							},
+							"uniqueItems": true
+						}
+					},
+					"400": {
+						"description": "Bad request."
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server."
+					},
+					"404": {
+						"description": "No results were found."
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server."
+					}
+				}
+			}
+		},
+		"/endpoints/partner/findAndModify": {
+			"put": {
+				"tags": [
+					"mysql/partner"
+				],
+				"description": "Modifies a single mysql/partner. Although the query may match multiple mysql/partners, only the first one will be modified.",
+				"operationId": "Find and Modify mysql/partner",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "data",
+						"description": "Find and modify body",
+						"required": false,
+						"schema": {
+							"$ref": "#/definitions/mysql~1partner"
+						}
+					},
+					{
+						"name": "upsert",
+						"in": "query",
+						"description": "Set to true to allow the method to create a new model.",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"description": "The number of records to fetch. The value must be greater than 0, and no greater than 1000.",
+						"required": false,
+						"type": "number",
+						"maximum": 1000,
+						"minimum": 0
+					},
+					{
+						"name": "skip",
+						"in": "query",
+						"description": "The number of records to skip. The value must not be less than 0.",
+						"required": false,
+						"type": "number",
+						"minimum": 0
+					},
+					{
+						"name": "where",
+						"in": "query",
+						"description": "Constrains values for fields. The value should be encoded JSON.",
+						"required": false,
+						"type": "string",
+						"format": "json"
+					},
+					{
+						"name": "order",
+						"in": "query",
+						"description": "A dictionary of one or more fields specifying sorting of results. In general, you can sort based on any predefined field that you can query using the where operator, as well as on custom fields. The value should be encoded JSON.",
+						"required": false,
+						"type": "string",
+						"format": "json"
+					},
+					{
+						"name": "sel",
+						"in": "query",
+						"description": "Selects which fields to return from the query. Others are excluded. The value should be encoded JSON.",
+						"required": false,
+						"type": "string",
+						"format": "json"
+					},
+					{
+						"name": "unsel",
+						"in": "query",
+						"description": "Selects which fields to not return from the query. Others are included. The value should be encoded JSON.",
+						"required": false,
+						"type": "string",
+						"format": "json"
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "The find and modify succeeded."
+					},
+					"400": {
+						"description": "Bad request."
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server."
+					},
+					"404": {
+						"description": "No results were found."
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server."
+					}
+				}
+			}
+		},
+		"/endpoints/partner": {
+			"get": {
+				"tags": [
+					"mysql/partner"
+				],
+				"description": "Find all mysql/partner",
+				"operationId": "Find All mysql/partner",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "The find all succeeded, and the results are available.",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/mysql~1partner-full"
+							}
+						}
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server."
+					},
+					"404": {
+						"description": "No results were found."
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server."
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"mysql/partner"
+				],
+				"description": "Create a mysql/partner",
+				"operationId": "Create mysql/partner",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "data",
+						"description": "Create body",
+						"required": false,
+						"schema": {
+							"$ref": "#/definitions/mysql~1partner"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "The create succeeded.",
+						"headers": {
+							"Location": {
+								"type": "string",
+								"description": "The URL to the newly created instance."
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request."
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server."
+					},
+					"404": {
+						"description": "No results were found."
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server."
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"mysql/partner"
+				],
+				"description": "Deletes all mysql/partners",
+				"operationId": "Delete All mysql/partner",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [],
+				"responses": {
+					"204": {
+						"description": "The delete succeeded."
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server."
+					},
+					"404": {
+						"description": "No results were found."
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server."
+					}
+				}
+			}
+		},
+		"/endpoints/partner/{id}": {
+			"get": {
+				"tags": [
+					"mysql/partner"
+				],
+				"description": "Find one mysql/partner",
+				"operationId": "Find By ID mysql/partner",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "The mysql/partner ID",
+						"required": true,
+						"type": "number"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The find succeeded, and the results are available.",
+						"schema": {
+							"$ref": "#/definitions/mysql~1partner-full"
+						}
+					},
+					"400": {
+						"description": "Bad request."
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server."
+					},
+					"404": {
+						"description": "No results were found."
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server."
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"mysql/partner"
+				],
+				"description": "Update a mysql/partner",
+				"operationId": "Update mysql/partner",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "The mysql/partner ID",
+						"required": true,
+						"type": "number"
+					},
+					{
+						"in": "body",
+						"name": "data",
+						"description": "Update body",
+						"required": false,
+						"schema": {
+							"$ref": "#/definitions/mysql~1partner"
+						}
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "The update succeeded."
+					},
+					"400": {
+						"description": "Bad request."
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server."
+					},
+					"404": {
+						"description": "No results were found."
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server."
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"mysql/partner"
+				],
+				"description": "Delete a specific mysql/partner",
+				"operationId": "Delete One mysql/partner",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "The mysql/partner ID",
+						"required": true,
+						"type": "number"
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "The delete succeeded."
+					},
+					"400": {
+						"description": "Bad request."
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server."
+					},
+					"404": {
+						"description": "No results were found."
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server."
+					}
+				}
+			}
+		},
+		"/endpoints/partner/count": {
+			"get": {
+				"tags": [
+					"mysql/partner"
+				],
+				"description": "Count a mysql/partner",
+				"operationId": "Count mysql/partner",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "where",
+						"in": "query",
+						"description": "Constrains values for fields. The value should be encoded JSON.",
+						"required": false,
+						"type": "string",
+						"format": "json"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The count succeeded, and the results are available.",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					"400": {
+						"description": "Bad request."
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server."
+					},
+					"404": {
+						"description": "No results were found."
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server."
+					}
+				}
+			}
+		},
+		"/endpoints/partner/query": {
+			"get": {
+				"tags": [
+					"mysql/partner"
+				],
+				"description": "Query a mysql/partner",
+				"operationId": "Query mysql/partner",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "limit",
+						"in": "query",
+						"description": "The number of records to fetch. The value must be greater than 0, and no greater than 1000.",
+						"required": false,
+						"type": "number",
+						"maximum": 1000,
+						"minimum": 0
+					},
+					{
+						"name": "skip",
+						"in": "query",
+						"description": "The number of records to skip. The value must not be less than 0.",
+						"required": false,
+						"type": "number",
+						"minimum": 0
+					},
+					{
+						"name": "where",
+						"in": "query",
+						"description": "Constrains values for fields. The value should be encoded JSON.",
+						"required": false,
+						"type": "string",
+						"format": "json"
+					},
+					{
+						"name": "order",
+						"in": "query",
+						"description": "A dictionary of one or more fields specifying sorting of results. In general, you can sort based on any predefined field that you can query using the where operator, as well as on custom fields. The value should be encoded JSON.",
+						"required": false,
+						"type": "string",
+						"format": "json"
+					},
+					{
+						"name": "sel",
+						"in": "query",
+						"description": "Selects which fields to return from the query. Others are excluded. The value should be encoded JSON.",
+						"required": false,
+						"type": "string",
+						"format": "json"
+					},
+					{
+						"name": "unsel",
+						"in": "query",
+						"description": "Selects which fields to not return from the query. Others are included. The value should be encoded JSON.",
+						"required": false,
+						"type": "string",
+						"format": "json"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The query succeeded, and the results are available.",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/mysql~1partner-full"
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request."
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server."
+					},
+					"404": {
+						"description": "No results were found."
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server."
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"mysql/partner": {
+			"type": "object",
+			"properties": {
+				"firstname": {
+					"type": "string"
+				},
+				"lastname": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"reg_date": {
+					"type": "string"
+				},
+				"rating": {
+					"type": "number"
+				},
+				"street": {
+					"type": "string"
+				},
+				"zip": {
+					"type": "string"
+				},
+				"city": {
+					"type": "string"
+				},
+				"country": {
+					"type": "string"
+				}
+			}
+		},
+		"mysql/partner-full": {
+			"type": "object",
+			"required": [
+				"id"
+			],
+			"properties": {
+				"firstname": {
+					"type": "string"
+				},
+				"lastname": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"reg_date": {
+					"type": "string"
+				},
+				"rating": {
+					"type": "number"
+				},
+				"street": {
+					"type": "string"
+				},
+				"zip": {
+					"type": "string"
+				},
+				"city": {
+					"type": "string"
+				},
+				"country": {
+					"type": "string"
+				},
+				"id": {
+					"type": "number"
+				}
+			}
+		}
+	},
+	"x-axway": {
+		"serviceType": "rest",
+		"image": "/api/portal/v1.3/discovery/swagger/apis/fbf80f82-4e78-4a8b-8507-e53cfbcc2c08/image",
+		"basePaths": [
+			"https://78b4bf254426.ngrok.io"
+		],
+		"retirementDate": 0,
+		"corsEnabled": true,
+		"deprecated": false,
+		"availableSDK": {
+			"ios-swift": "/discovery/sdk/fbf80f82-4e78-4a8b-8507-e53cfbcc2c08/ios-swift",
+			"titanium": "/discovery/sdk/fbf80f82-4e78-4a8b-8507-e53cfbcc2c08/titanium",
+			"android": "/discovery/sdk/fbf80f82-4e78-4a8b-8507-e53cfbcc2c08/android",
+			"nodejs": "/discovery/sdk/fbf80f82-4e78-4a8b-8507-e53cfbcc2c08/nodejs"
+		},
+		"apiResourceType": "swagger20",
+		"tags": {
+			"publish": [
+				"central"
+			]
+		},
+		"expired": false,
+		"customProperties": {
+			"majorHash": "9192030072609421788",
+			"apicId": "e4e57c9575008de90175080d1fbc0b49",
+			"minorHash": "16072982660506862323"
+		},
+		"id": "fbf80f82-4e78-4a8b-8507-e53cfbcc2c08",
+		"state": "published"
+	},
+	"host": "78b4bf254426.ngrok.io:443",
+	"schemes": [
+		"https"
+	],
+	"basePath": "/crm"
+}

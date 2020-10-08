@@ -30,7 +30,7 @@
 			"env"
 		]
 	},
-	"start": "http.setresponse.1",
+	"start": "crm-v7.1",
 	"nodes": {
 		"http.setresponse.1": {
 			"type": "nodehandler://axway-flow/http",
@@ -52,6 +52,58 @@
 				}
 			},
 			"metaMethod": "Set HTTP Response"
+		},
+		"crm-v7.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-swagger/crm-v7",
+			"name": "Find By ID mysql/partner",
+			"method": "Find By ID mysql/partner",
+			"parameters": [
+				{
+					"name": "id",
+					"type": "number",
+					"value": "14",
+					"metaName": "id",
+					"metaDescription": "The mysql/partner ID"
+				}
+			],
+			"outputs": {
+				"200": {
+					"routes": [],
+					"context": "$.response",
+					"metaName": "200"
+				},
+				"400": {
+					"routes": [],
+					"context": "$.response",
+					"metaName": "400"
+				},
+				"401": {
+					"routes": [],
+					"context": "$.response",
+					"metaName": "401"
+				},
+				"404": {
+					"routes": [],
+					"context": "$.response",
+					"metaName": "404"
+				},
+				"500": {
+					"routes": [],
+					"context": "$.response",
+					"metaName": "500"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				},
+				"default": {
+					"routes": [],
+					"context": "$.response",
+					"metaName": "Default"
+				}
+			},
+			"metaMethod": "Find By ID mysql/partner"
 		}
 	}
 }
