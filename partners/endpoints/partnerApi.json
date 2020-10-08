@@ -1,0 +1,85 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Partner API",
+    "version": "1.0",
+    "description": "Use this API to perform partner onboarding"
+  },
+  "host": "localhost:3000",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "paths": {
+    "/partner/{partnerId}": {
+      "post": {
+        "summary": "",
+        "operationId": "Create Partner",
+        "responses": {
+          "201": {
+            "description": "Partner created",
+            "headers": {}
+          }
+        },
+        "description": "This endpoint creates a new partner in our sub-systems",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            },
+            "description": "The partner data as a JSON request body",
+            "x-examples": {
+              "Example partner": {}
+            }
+          }
+        ],
+        "tags": [
+          "partner"
+        ],
+        "x-flow": "partnerApi-Create Partner"
+      },
+      "get": {
+        "summary": "",
+        "operationId": "Get Partner",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Get partner information from our sub-systems.",
+        "x-flow": "partnerApi-Get Partner"
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "Delete Partner",
+        "responses": {
+          "204": {
+            "description": "Partner deleted"
+          }
+        },
+        "description": "Deletes a partner",
+        "x-flow": "partnerApi-Delete Partner"
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "partnerId",
+          "in": "path",
+          "required": true,
+          "description": "The ID of the partner"
+        }
+      ]
+    }
+  },
+  "definitions": {},
+  "securityDefinitions": {},
+  "basePath": "/api/v1"
+}
