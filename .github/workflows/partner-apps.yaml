@@ -1,4 +1,4 @@
-name: Test API-Builder4Elastic
+name: Build APICON 2020 Partners APP
 
 on: [push, pull_request]
 
