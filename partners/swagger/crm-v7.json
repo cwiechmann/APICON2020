@@ -2,7 +2,7 @@
 	"swagger": "2.0",
 	"info": {
 		"description": "An API Builder service",
-		"version": "1.0.0",
+		"version": "1.0.1",
 		"title": "CRM",
 		"x-summary": "CRM API for APICon Demo"
 	},
@@ -43,84 +43,6 @@
 					},
 					"204": {
 						"description": "The upsert succeeded, and resulted in an update."
-					},
-					"400": {
-						"description": "Bad request."
-					},
-					"401": {
-						"description": "This request requires user authentication, as configured by the server."
-					},
-					"404": {
-						"description": "No results were found."
-					},
-					"500": {
-						"description": "Something went wrong during the request; check out the logs on your server."
-					}
-				}
-			}
-		},
-		"/endpoints/partner/distinct/{field}": {
-			"get": {
-				"tags": [
-					"mysql/partner"
-				],
-				"description": "Find distinct mysql/partner",
-				"operationId": "Distinct mysql/partner",
-				"produces": [
-					"application/json"
-				],
-				"parameters": [
-					{
-						"name": "field",
-						"in": "path",
-						"description": "The field name that must be distinct.",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"name": "limit",
-						"in": "query",
-						"description": "The number of records to fetch. The value must be greater than 0, and no greater than 1000.",
-						"required": false,
-						"type": "number",
-						"maximum": 1000,
-						"minimum": 0
-					},
-					{
-						"name": "skip",
-						"in": "query",
-						"description": "The number of records to skip. The value must not be less than 0.",
-						"required": false,
-						"type": "number",
-						"minimum": 0
-					},
-					{
-						"name": "where",
-						"in": "query",
-						"description": "Constrains values for fields. The value should be encoded JSON.",
-						"required": false,
-						"type": "string",
-						"format": "json"
-					},
-					{
-						"name": "order",
-						"in": "query",
-						"description": "A dictionary of one or more fields specifying sorting of results. In general, you can sort based on any predefined field that you can query using the where operator, as well as on custom fields. The value should be encoded JSON.",
-						"required": false,
-						"type": "string",
-						"format": "json"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Distinct fields response",
-						"schema": {
-							"type": "array",
-							"items": {
-								"type": "string"
-							},
-							"uniqueItems": true
-						}
 					},
 					"400": {
 						"description": "Bad request."
@@ -220,6 +142,84 @@
 				"responses": {
 					"204": {
 						"description": "The find and modify succeeded."
+					},
+					"400": {
+						"description": "Bad request."
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server."
+					},
+					"404": {
+						"description": "No results were found."
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server."
+					}
+				}
+			}
+		},
+		"/endpoints/partner/distinct/{field}": {
+			"get": {
+				"tags": [
+					"mysql/partner"
+				],
+				"description": "Find distinct mysql/partner",
+				"operationId": "Distinct mysql/partner",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "field",
+						"in": "path",
+						"description": "The field name that must be distinct.",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"description": "The number of records to fetch. The value must be greater than 0, and no greater than 1000.",
+						"required": false,
+						"type": "number",
+						"maximum": 1000,
+						"minimum": 0
+					},
+					{
+						"name": "skip",
+						"in": "query",
+						"description": "The number of records to skip. The value must not be less than 0.",
+						"required": false,
+						"type": "number",
+						"minimum": 0
+					},
+					{
+						"name": "where",
+						"in": "query",
+						"description": "Constrains values for fields. The value should be encoded JSON.",
+						"required": false,
+						"type": "string",
+						"format": "json"
+					},
+					{
+						"name": "order",
+						"in": "query",
+						"description": "A dictionary of one or more fields specifying sorting of results. In general, you can sort based on any predefined field that you can query using the where operator, as well as on custom fields. The value should be encoded JSON.",
+						"required": false,
+						"type": "string",
+						"format": "json"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Distinct fields response",
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							},
+							"uniqueItems": true
+						}
 					},
 					"400": {
 						"description": "Bad request."
@@ -669,35 +669,33 @@
 	},
 	"x-axway": {
 		"serviceType": "rest",
-		"image": "/api/portal/v1.3/discovery/swagger/apis/fbf80f82-4e78-4a8b-8507-e53cfbcc2c08/image",
+		"image": "/api/portal/v1.3/discovery/swagger/apis/1d1dcde3-1a27-46cf-b2ff-bb34f31f9275/image",
 		"basePaths": [
-			"https://78b4bf254426.ngrok.io"
+			"https://310a94040a41.ngrok.io"
 		],
+		"expired": false,
 		"retirementDate": 0,
 		"corsEnabled": true,
 		"deprecated": false,
 		"availableSDK": {
-			"ios-swift": "/discovery/sdk/fbf80f82-4e78-4a8b-8507-e53cfbcc2c08/ios-swift",
-			"titanium": "/discovery/sdk/fbf80f82-4e78-4a8b-8507-e53cfbcc2c08/titanium",
-			"android": "/discovery/sdk/fbf80f82-4e78-4a8b-8507-e53cfbcc2c08/android",
-			"nodejs": "/discovery/sdk/fbf80f82-4e78-4a8b-8507-e53cfbcc2c08/nodejs"
+			"ios-swift": "/discovery/sdk/1d1dcde3-1a27-46cf-b2ff-bb34f31f9275/ios-swift",
+			"titanium": "/discovery/sdk/1d1dcde3-1a27-46cf-b2ff-bb34f31f9275/titanium",
+			"android": "/discovery/sdk/1d1dcde3-1a27-46cf-b2ff-bb34f31f9275/android",
+			"nodejs": "/discovery/sdk/1d1dcde3-1a27-46cf-b2ff-bb34f31f9275/nodejs"
 		},
 		"apiResourceType": "swagger20",
+		"id": "1d1dcde3-1a27-46cf-b2ff-bb34f31f9275",
+		"state": "published",
 		"tags": {
+			"Type": [
+				"presales"
+			],
 			"publish": [
 				"central"
 			]
-		},
-		"expired": false,
-		"customProperties": {
-			"majorHash": "9192030072609421788",
-			"apicId": "e4e57c9575008de90175080d1fbc0b49",
-			"minorHash": "16072982660506862323"
-		},
-		"id": "fbf80f82-4e78-4a8b-8507-e53cfbcc2c08",
-		"state": "published"
+		}
 	},
-	"host": "78b4bf254426.ngrok.io:443",
+	"host": "310a94040a41.ngrok.io:443",
 	"schemes": [
 		"https"
 	],

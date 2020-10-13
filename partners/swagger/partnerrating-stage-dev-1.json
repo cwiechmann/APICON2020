@@ -2,12 +2,51 @@
 	"swagger": "2.0",
 	"info": {
 		"description": "Calculates a rating for a given partner",
-		"version": "2020-10-08T13:06:15Z",
+		"version": "2020-10-08T17:05:59Z",
 		"title": "PartnerRating"
 	},
 	"paths": {
 		"/rating": {
 			"post": {
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "Partner",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Partner"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "201 response",
+						"schema": {
+							"$ref": "#/definitions/Rating"
+						},
+						"headers": {
+							"Access-Control-Allow-Origin": {
+								"type": "string"
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"api_key": []
+					}
+				]
+			},
+			"options": {
+				"consumes": [
+					"application/json"
+				],
 				"produces": [
 					"application/json"
 				],
@@ -16,6 +55,17 @@
 						"description": "200 response",
 						"schema": {
 							"$ref": "#/definitions/Empty"
+						},
+						"headers": {
+							"Access-Control-Allow-Origin": {
+								"type": "string"
+							},
+							"Access-Control-Allow-Methods": {
+								"type": "string"
+							},
+							"Access-Control-Allow-Headers": {
+								"type": "string"
+							}
 						}
 					}
 				}
@@ -38,17 +88,63 @@
 					"200": {
 						"description": "200 response",
 						"schema": {
-							"$ref": "#/definitions/Empty"
+							"$ref": "#/definitions/Rating"
 						}
 					}
-				}
+				},
+				"security": [
+					{
+						"api_key": []
+					}
+				]
 			}
+		}
+	},
+	"securityDefinitions": {
+		"api_key": {
+			"type": "apiKey",
+			"name": "x-api-key",
+			"in": "header"
 		}
 	},
 	"definitions": {
 		"Empty": {
 			"type": "object",
 			"title": "Empty Schema"
+		},
+		"Rating": {
+			"type": "object",
+			"properties": {
+				"partner": {
+					"type": "string"
+				},
+				"rating": {
+					"type": "number"
+				}
+			}
+		},
+		"Partner": {
+			"type": "object",
+			"properties": {
+				"firstname": {
+					"type": "string"
+				},
+				"lastname": {
+					"type": "string"
+				},
+				"street": {
+					"type": "string"
+				},
+				"zip": {
+					"type": "string"
+				},
+				"city": {
+					"type": "string"
+				},
+				"country": {
+					"type": "string"
+				}
+			}
 		}
 	},
 	"host": "7bk9x1oyea.execute-api.eu-central-1.amazonaws.com:443",
