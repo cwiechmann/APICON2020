@@ -7,9 +7,9 @@ module.exports = {
 				// outbound requests to this service.
 				uri: {
 					// protocol: 'https',
-					// host: 'hostname',
+					host: process.env.CRM_HOSTNAME,
 					// port: 443,
-					// basePath: '/api'
+					basePath: process.env.CRM_BASEPATH
 				}
 			}
 		}

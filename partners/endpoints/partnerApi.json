@@ -68,15 +68,52 @@
             "in": "body",
             "name": "body",
             "schema": {
+              "description": "",
               "type": "object",
-              "properties": {}
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "lastName": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "email": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "zip": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "city": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "country": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "firstName",
+                "lastName",
+                "email",
+                "zip",
+                "city",
+                "country"
+              ]
             },
             "description": "Partner to be created",
             "x-examples": {
               "MaxMustermann": {
                 "firstName": "Max",
                 "lastName": "Mustermann",
-                "email": "max@mustermanns.de"
+                "email": "max@mustermanns.de",
+                "zip": "10711",
+                "city": "Berlin",
+                "country": "DE"
               }
             }
           }

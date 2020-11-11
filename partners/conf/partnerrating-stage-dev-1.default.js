@@ -7,7 +7,7 @@ module.exports = {
 				// outbound requests to this service.
 				uri: {
 					// protocol: 'https',
-					// host: 'hostname',
+					// host: 'cba7c119bcc0.ngrok.io',
 					// port: 443,
 					// basePath: '/api'
 				}
